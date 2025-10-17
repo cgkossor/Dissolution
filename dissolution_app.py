@@ -376,56 +376,86 @@ def main():
         st.plotly_chart(fig1, use_container_width=True, config={'staticPlot': False, 'responsive': True})
         st.markdown("<h3>Surface Area, Solubility, and Concentration</h3>", unsafe_allow_html=True)
         st.plotly_chart(fig2, use_container_width=True, config={'staticPlot': False, 'responsive': True})
-
+        
         # Adding equations section
         st.markdown("<h3>Model Equations</h3>", unsafe_allow_html=True)
+        
+        # Noyes-Whitney Equation
+        st.markdown("<h4>Noyes-Whitney Equation</h4>", unsafe_allow_html=True)
+        st.latex(r'''
+            \frac{dC_b}{dt} = \frac{k \cdot A(t) \cdot (C_s(t) - C_b)}{V}
+        ''')
         st.markdown(
             """
-            <div style="font-size: 16px;">
-            <p><strong>Noyes-Whitney Equation:</strong></p>
-            <p>$$ \\frac{dC_b}{dt} = \\frac{k \\cdot A(t) \\cdot (C_s(t) - C_b)}{V} $$</p>
-            <table border="1" style="width:50%; border-collapse: collapse;">
+            <style>
+            table { width: 50%; margin-left: auto; margin-right: auto; border: none; }
+            th, td { border: none; padding: 8px; text-align: left; }
+            </style>
+            <table>
                 <tr><th>Variable</th><th>Description</th><th>Units</th></tr>
-                <tr><td>C_b</td><td>Drug concentration in bulk solution</td><td>mg/L</td></tr>
-                <tr><td>t</td><td>Time</td><td>min</td></tr>
-                <tr><td>k</td><td>Dissolution rate constant</td><td>m/min</td></tr>
-                <tr><td>A(t)</td><td>Surface area at time t</td><td>cm²</td></tr>
-                <tr><td>C_s(t)</td><td>Solubility at time t</td><td>mg/L</td></tr>
-                <tr><td>V</td><td>Volume of dissolution medium</td><td>L</td></tr>
+                <tr><td>$C_b$</td><td>Drug concentration in bulk solution</td><td>mg/L</td></tr>
+                <tr><td>$t$</td><td>Time</td><td>min</td></tr>
+                <tr><td>$k$</td><td>Dissolution rate constant</td><td>m/min</td></tr>
+                <tr><td>$A(t)$</td><td>Surface area at time t</td><td>cm²</td></tr>
+                <tr><td>$C_s(t)$</td><td>Solubility at time t</td><td>mg/L</td></tr>
+                <tr><td>$V$</td><td>Volume of dissolution medium</td><td>L</td></tr>
             </table>
-
-            <p><strong>Surface Area:</strong></p>
-            <p>$$ A(t) = A_0 \\cdot \\left( \\frac{m(t)}{m_0} \\right)^{2/3} $$</p>
-            <table border="1" style="width:50%; border-collapse: collapse;">
+            """,
+            unsafe_allow_html=True
+        )
+        
+        # Surface Area Equation
+        st.markdown("<h4>Surface Area</h4>", unsafe_allow_html=True)
+        st.latex(r'''
+            A(t) = A_0 \cdot \left( \frac{m(t)}{m_0} \right)^{2/3}
+        ''')
+        st.markdown(
+            """
+            <table>
                 <tr><th>Variable</th><th>Description</th><th>Units</th></tr>
-                <tr><td>A(t)</td><td>Surface area at time t</td><td>cm²</td></tr>
-                <tr><td>A_0</td><td>Initial surface area</td><td>cm²</td></tr>
-                <tr><td>m(t)</td><td>Mass of undissolved drug at time t</td><td>mg</td></tr>
-                <tr><td>m_0</td><td>Initial total powder mass</td><td>mg</td></tr>
+                <tr><td>$A(t)$</td><td>Surface area at time t</td><td>cm²</td></tr>
+                <tr><td>$A_0$</td><td>Initial surface area</td><td>cm²</td></tr>
+                <tr><td>$m(t)$</td><td>Mass of undissolved drug at time t</td><td>mg</td></tr>
+                <tr><td>$m_0$</td><td>Initial total powder mass</td><td>mg</td></tr>
             </table>
-
-            <p><strong>Solubility:</strong></p>
-            <p>$$ C_s(t) = C_{cryst} + (C_{s0} - C_{cryst}) \\cdot e^{-k_{cryst} \\cdot t} $$</p>
-            <table border="1" style="width:50%; border-collapse: collapse;">
+            """,
+            unsafe_allow_html=True
+        )
+        
+        # Solubility Equation
+        st.markdown("<h4>Solubility</h4>", unsafe_allow_html=True)
+        st.latex(r'''
+            C_s(t) = C_{cryst} + (C_{s0} - C_{cryst}) \cdot e^{-k_{cryst} \cdot t}
+        ''')
+        st.markdown(
+            """
+            <table>
                 <tr><th>Variable</th><th>Description</th><th>Units</th></tr>
-                <tr><td>C_s(t)</td><td>Solubility at time t</td><td>mg/L</td></tr>
-                <tr><td>C_{cryst}</td><td>Crystalline solubility</td><td>mg/L</td></tr>
-                <tr><td>C_{s0}</td><td>Initial amorphous solubility</td><td>mg/L</td></tr>
-                <tr><td>k_{cryst}</td><td>Crystallization rate constant</td><td>/min</td></tr>
-                <tr><td>t</td><td>Time</td><td>min</td></tr>
+                <tr><td>$C_s(t)$</td><td>Solubility at time t</td><td>mg/L</td></tr>
+                <tr><td>$C_{cryst}$</td><td>Crystalline solubility</td><td>mg/L</td></tr>
+                <tr><td>$C_{s0}$</td><td>Initial amorphous solubility</td><td>mg/L</td></tr>
+                <tr><td>$k_{cryst}$</td><td>Crystallization rate constant</td><td>/min</td></tr>
+                <tr><td>$t$</td><td>Time</td><td>min</td></tr>
             </table>
-
-            <p><strong>Crystallization Rate Constant:</strong></p>
-            <p>$$ k_{cryst} = k_{cryst,ref} \\cdot \\left( \\frac{r_{ref}}{r_0} \\right)^{\\alpha} $$</p>
-            <table border="1" style="width:50%; border-collapse: collapse;">
+            """,
+            unsafe_allow_html=True
+        )
+        
+        # Crystallization Rate Constant Equation
+        st.markdown("<h4>Crystallization Rate Constant</h4>", unsafe_allow_html=True)
+        st.latex(r'''
+            k_{cryst} = k_{cryst,ref} \cdot \left( \frac{r_{ref}}{r_0} \right)^{\alpha}
+        ''')
+        st.markdown(
+            """
+            <table>
                 <tr><th>Variable</th><th>Description</th><th>Units</th></tr>
-                <tr><td>k_{cryst}</td><td>Crystallization rate constant</td><td>/min</td></tr>
-                <tr><td>k_{cryst,ref}</td><td>Reference crystallization rate</td><td>/min</td></tr>
-                <tr><td>r_{ref}</td><td>Reference particle radius</td><td>m</td></tr>
-                <tr><td>r_0</td><td>Initial particle radius</td><td>m</td></tr>
-                <tr><td>α</td><td>Power-law exponent</td><td>Dimensionless</td></tr>
+                <tr><td>$k_{cryst}$</td><td>Crystallization rate constant</td><td>/min</td></tr>
+                <tr><td>$k_{cryst,ref}$</td><td>Reference crystallization rate</td><td>/min</td></tr>
+                <tr><td>$r_{ref}$</td><td>Reference particle radius</td><td>m</td></tr>
+                <tr><td>$r_0$</td><td>Initial particle radius</td><td>m</td></tr>
+                <tr><td>$\alpha$</td><td>Power-law exponent</td><td>Dimensionless</td></tr>
             </table>
-            </div>
             """,
             unsafe_allow_html=True
         )
