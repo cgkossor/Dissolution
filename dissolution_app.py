@@ -371,7 +371,7 @@ def main():
     with st.container():
         results, params = run_simulations(d50_values, si_values, si_max, m0, DL, rho, V, k, Cs0, k_cryst_ref, r_ref, alpha, C_cryst, t_max)
         fig1, fig2 = plot_comparison(results, params)
-    
+        
         st.markdown("<h3>Dissolved Percentage</h3>", unsafe_allow_html=True)
         st.plotly_chart(fig1, use_container_width=True, config={'staticPlot': False, 'responsive': True})
         st.markdown("<h3>Surface Area, Solubility, and Concentration</h3>", unsafe_allow_html=True)
@@ -393,16 +393,16 @@ def main():
             </style>
             <table>
                 <tr><th>Variable</th><th>Description</th><th>Units</th></tr>
-                <tr><td>\( C_b \)</td><td>Drug concentration in bulk solution</td><td>mg/L</td></tr>
-                <tr><td>\( t \)</td><td>Time</td><td>min</td></tr>
-                <tr><td>\( k \)</td><td>Dissolution rate constant</td><td>m/min</td></tr>
-                <tr><td>\( A(t) \)</td><td>Surface area at time t</td><td>cm²</td></tr>
-                <tr><td>\( C_s(t) \)</td><td>Solubility at time t</td><td>mg/L</td></tr>
-                <tr><td>\( V \)</td><td>Volume of dissolution medium</td><td>L</td></tr>
             </table>
             """,
             unsafe_allow_html=True
         )
+        st.latex(r'C_b'); st.markdown("Drug concentration in bulk solution | mg/L", unsafe_allow_html=True)
+        st.latex(r't'); st.markdown("Time | min", unsafe_allow_html=True)
+        st.latex(r'k'); st.markdown("Dissolution rate constant | m/min", unsafe_allow_html=True)
+        st.latex(r'A(t)'); st.markdown("Surface area at time t | cm²", unsafe_allow_html=True)
+        st.latex(r'C_s(t)'); st.markdown("Solubility at time t | mg/L", unsafe_allow_html=True)
+        st.latex(r'V'); st.markdown("Volume of dissolution medium | L", unsafe_allow_html=True)
         
         # Surface Area Equation
         st.markdown("<h4>Surface Area</h4>", unsafe_allow_html=True)
@@ -413,14 +413,14 @@ def main():
             """
             <table>
                 <tr><th>Variable</th><th>Description</th><th>Units</th></tr>
-                <tr><td>\( A(t) \)</td><td>Surface area at time t</td><td>cm²</td></tr>
-                <tr><td>\( A_0 \)</td><td>Initial surface area</td><td>cm²</td></tr>
-                <tr><td>\( m(t) \)</td><td>Mass of undissolved drug at time t</td><td>mg</td></tr>
-                <tr><td>\( m_0 \)</td><td>Initial total powder mass</td><td>mg</td></tr>
             </table>
             """,
             unsafe_allow_html=True
         )
+        st.latex(r'A(t)'); st.markdown("Surface area at time t | cm²", unsafe_allow_html=True)
+        st.latex(r'A_0'); st.markdown("Initial surface area | cm²", unsafe_allow_html=True)
+        st.latex(r'm(t)'); st.markdown("Mass of undissolved drug at time t | mg", unsafe_allow_html=True)
+        st.latex(r'm_0'); st.markdown("Initial total powder mass | mg", unsafe_allow_html=True)
         
         # Solubility Equation
         st.markdown("<h4>Solubility</h4>", unsafe_allow_html=True)
@@ -431,15 +431,15 @@ def main():
             """
             <table>
                 <tr><th>Variable</th><th>Description</th><th>Units</th></tr>
-                <tr><td>\( C_s(t) \)</td><td>Solubility at time t</td><td>mg/L</td></tr>
-                <tr><td>\( C_{cryst} \)</td><td>Crystalline solubility</td><td>mg/L</td></tr>
-                <tr><td>\( C_{s0} \)</td><td>Initial amorphous solubility</td><td>mg/L</td></tr>
-                <tr><td>\( k_{cryst} \)</td><td>Crystallization rate constant</td><td>/min</td></tr>
-                <tr><td>\( t \)</td><td>Time</td><td>min</td></tr>
             </table>
             """,
             unsafe_allow_html=True
         )
+        st.latex(r'C_s(t)'); st.markdown("Solubility at time t | mg/L", unsafe_allow_html=True)
+        st.latex(r'C_{cryst}'); st.markdown("Crystalline solubility | mg/L", unsafe_allow_html=True)
+        st.latex(r'C_{s0}'); st.markdown("Initial amorphous solubility | mg/L", unsafe_allow_html=True)
+        st.latex(r'k_{cryst}'); st.markdown("Crystallization rate constant | /min", unsafe_allow_html=True)
+        st.latex(r't'); st.markdown("Time | min", unsafe_allow_html=True)
         
         # Crystallization Rate Constant Equation
         st.markdown("<h4>Crystallization Rate Constant</h4>", unsafe_allow_html=True)
@@ -450,15 +450,15 @@ def main():
             """
             <table>
                 <tr><th>Variable</th><th>Description</th><th>Units</th></tr>
-                <tr><td>\( k_{cryst} \)</td><td>Crystallization rate constant</td><td>/min</td></tr>
-                <tr><td>\( k_{cryst,ref} \)</td><td>Reference crystallization rate</td><td>/min</td></tr>
-                <tr><td>\( r_{ref} \)</td><td>Reference particle radius</td><td>m</td></tr>
-                <tr><td>\( r_0 \)</td><td>Initial particle radius</td><td>m</td></tr>
-                <tr><td>\( \alpha \)</td><td>Power-law exponent</td><td>Dimensionless</td></tr>
             </table>
             """,
             unsafe_allow_html=True
         )
+        st.latex(r'k_{cryst}'); st.markdown("Crystallization rate constant | /min", unsafe_allow_html=True)
+        st.latex(r'k_{cryst,ref}'); st.markdown("Reference crystallization rate | /min", unsafe_allow_html=True)
+        st.latex(r'r_{ref}'); st.markdown("Reference particle radius | m", unsafe_allow_html=True)
+        st.latex(r'r_0'); st.markdown("Initial particle radius | m", unsafe_allow_html=True)
+        st.latex(r'\alpha'); st.markdown("Power-law exponent | Dimensionless", unsafe_allow_html=True)
 
 
 if __name__ == "__main__":
