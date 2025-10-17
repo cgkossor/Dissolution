@@ -313,10 +313,10 @@ def main():
         <style>
         .main .block-container {
             padding-left: 1rem !important;
-            padding-top: 0.5rem !important;
-            padding-bottom: 0.5rem !important;
+            padding-top: 0.1rem !important;
+            padding-bottom: 0.1rem !important;
         }
-        h1 {
+        h2 {
             margin-bottom: -20px;
         }
         </style>
@@ -366,9 +366,9 @@ def main():
         results, params = run_simulations(r0_values, si_values, si_max, m0, DL, rho, V, k, Cs0, k_cryst_ref, r_ref, alpha, C_cryst, t_max)
         fig1, fig2 = plot_comparison(results, params)
         
-        st.markdown("<h1>Dissolved Percentage</h1>", unsafe_allow_html=True)
+        st.markdown("<h2>Dissolved Percentage</h2>", unsafe_allow_html=True)
         st.plotly_chart(fig1, use_container_width=True, config={'staticPlot': False, 'responsive': True})
-        st.subheader("Surface Area, Solubility, and Concentration")
+        st.markdown("<h2>Surface Area, Solubility, and Concentration</h2>", unsafe_allow_html=True)
         st.plotly_chart(fig2, use_container_width=True, config={'staticPlot': False, 'responsive': True})
 
 if __name__ == "__main__":
