@@ -333,7 +333,7 @@ def main():
     st.write("Chris Kossor (cgkossor@gmail.com)")
 
     st.sidebar.header("Simulation Parameters")
-    DL = st.sidebar.slider("Drug Loading (DL)", min_value=0.0, max_value=1.0, value=0.5, step=0.01, key="dl")
+    # DL = st.sidebar.slider("Drug Loading (DL)", min_value=0.0, max_value=1.0, value=0.5, step=0.01, key="dl")
     k = st.sidebar.slider("Dissolution Rate Constant (k, m/min)", min_value=0.0001, max_value=0.005, value=1.80e-3, step=1e-4, format="%.4e", key="k")
     Cs0 = st.sidebar.slider("Initial Amorphous Solubility (Cs0, mg/L)", min_value=0.0, max_value=100.0, value=50.0, step=0.1, key="cs0")
     C_cryst = st.sidebar.slider("Crystalline Solubility (C_cryst, mg/L)", min_value=0.0, max_value=50.0, value=14.5, step=0.1, key="c_cryst")
@@ -362,6 +362,7 @@ def main():
 
     st.sidebar.header("Experimental Setup")
     m0 = st.sidebar.number_input("Total Powder Mass (m0, mg)", min_value=0.0, value=180.0, step=1.0, key="m0")
+    DL = st.sidebar.number_input("Drug Loading (DL)", min_value=0.0, max_value=1.0, value=0.5, step=0.01, key="dl")
     rho = st.sidebar.number_input("Density (rho, kg/m³)", min_value=0.0, value=1200.0, step=10.0, key="rho")
     V = st.sidebar.number_input("Volume (V, L)", min_value=0.0, value=0.9, step=0.01, key="v")
     t_max = st.sidebar.number_input("Maximum Time (t_max, min)", min_value=0.0, value=120.0, step=1.0, key="t_max")
