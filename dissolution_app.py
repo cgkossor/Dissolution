@@ -161,7 +161,7 @@ def plot_comparison(results_list, params):
         ))
 
     fig1.update_layout(
-        title="Dissolution Profiles",
+        # title="Dissolution Profiles",
         xaxis_title="Time (min)",
         yaxis_title="Dissolved Percentage (%)",
         hovermode="closest",
@@ -316,20 +316,25 @@ def main():
         </style>
         """, unsafe_allow_html=True)
     
-    st.title("Interactive Dissolution Simulation Web App")
+    st.title("Interactive Dissolution Simulation")
     st.write("Adjust the sliders and inputs below to simulate dissolution profiles. Plots update automatically.")
+    st.write("Chris Kossor (cgkossor@gmail.com)")
 
     st.sidebar.header("Simulation Parameters")
     DL = st.sidebar.slider("Drug Loading (DL)", min_value=0.0, max_value=1.0, value=0.5, step=0.01, key="dl")
     k = st.sidebar.slider("Dissolution Rate Constant (k, m/min)", min_value=0.0001, max_value=0.005, value=1.80e-3, step=1e-4, format="%.4e", key="k")
     Cs0 = st.sidebar.slider("Initial Amorphous Solubility (Cs0, mg/L)", min_value=0.0, max_value=100.0, value=50.0, step=0.1, key="cs0")
     C_cryst = st.sidebar.slider("Crystalline Solubility (C_cryst, mg/L)", min_value=0.0, max_value=50.0, value=14.5, step=0.1, key="c_cryst")
-    m0 = st.sidebar.number_input("Total Powder Mass (m0, mg)", min_value=0.0, value=180.0, step=1.0, key="m0")
-    rho = st.sidebar.number_input("Density (rho, kg/m³)", min_value=0.0, value=1200.0, step=10.0, key="rho")
-    V = st.sidebar.number_input("Volume (V, L)", min_value=0.0, value=0.9, step=0.01, key="v")
+    
+    st.sidebar.header("Crystalization Constants")
     r_ref = st.sidebar.number_input("Reference Particle Radius (r_ref, μm)", min_value=0.0, value=22.5, step=0.1, key="r_ref") * 1e-6
     k_cryst_ref = st.sidebar.number_input("Reference Crystallization Rate (k_cryst_ref, /min)", min_value=0.0, value=1.36e-2, step=1e-3, format="%.3e", key="k_cryst_ref")
     alpha = st.sidebar.number_input("Power-law Exponent (alpha)", min_value=0.0, value=1.0, step=0.1, key="alpha")
+
+    st.sidebar.header("Experimental Setup")
+    m0 = st.sidebar.number_input("Total Powder Mass (m0, mg)", min_value=0.0, value=180.0, step=1.0, key="m0")
+    rho = st.sidebar.number_input("Density (rho, kg/m³)", min_value=0.0, value=1200.0, step=10.0, key="rho")
+    V = st.sidebar.number_input("Volume (V, L)", min_value=0.0, value=0.9, step=0.01, key="v")
     t_max = st.sidebar.number_input("Maximum Time (t_max, min)", min_value=0.0, value=120.0, step=1.0, key="t_max")
     
     st.sidebar.header("Particle Sizes (r0, μm)")
