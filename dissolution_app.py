@@ -166,7 +166,7 @@ def plot_comparison(results_list, params):
         yaxis_title="Dissolved Percentage (%)",
         hovermode="closest",
         template="plotly_white",
-        height=500,
+        height=800,
         showlegend=True,
         legend=dict(
             groupclick="toggleitem",
@@ -330,13 +330,7 @@ def main():
     r_ref = st.sidebar.number_input("Reference Particle Radius (r_ref, μm)", min_value=0.0, value=22.5, step=0.1, key="r_ref") * 1e-6
     k_cryst_ref = st.sidebar.number_input("Reference Crystallization Rate (k_cryst_ref, /min)", min_value=0.0, value=1.36e-2, step=1e-3, format="%.3e", key="k_cryst_ref")
     alpha = st.sidebar.number_input("Power-law Exponent (alpha)", min_value=0.0, value=1.0, step=0.1, key="alpha")
-
-    st.sidebar.header("Experimental Setup")
-    m0 = st.sidebar.number_input("Total Powder Mass (m0, mg)", min_value=0.0, value=180.0, step=1.0, key="m0")
-    rho = st.sidebar.number_input("Density (rho, kg/m³)", min_value=0.0, value=1200.0, step=10.0, key="rho")
-    V = st.sidebar.number_input("Volume (V, L)", min_value=0.0, value=0.9, step=0.01, key="v")
-    t_max = st.sidebar.number_input("Maximum Time (t_max, min)", min_value=0.0, value=120.0, step=1.0, key="t_max")
-    
+   
     st.sidebar.header("Particle Sizes (r0, μm)")
     num_r0 = st.sidebar.number_input("Number of Particle Sizes", min_value=1, max_value=5, value=2, step=1, key="num_r0")
     r0_values = []
@@ -353,6 +347,12 @@ def main():
         default_value = 0.145 if i == 0 else 0.25 if i == 1 else 0.1 * (i + 1)
         si = st.sidebar.number_input(f"Non-Sink Index {i+1}", min_value=0.0, value=default_value, step=0.01, key=f"si_{i}")
         si_values.append(si)
+
+    st.sidebar.header("Experimental Setup")
+    m0 = st.sidebar.number_input("Total Powder Mass (m0, mg)", min_value=0.0, value=180.0, step=1.0, key="m0")
+    rho = st.sidebar.number_input("Density (rho, kg/m³)", min_value=0.0, value=1200.0, step=10.0, key="rho")
+    V = st.sidebar.number_input("Volume (V, L)", min_value=0.0, value=0.9, step=0.01, key="v")
+    t_max = st.sidebar.number_input("Maximum Time (t_max, min)", min_value=0.0, value=120.0, step=1.0, key="t_max")
 
     with st.container():
         results, params = run_simulations(r0_values, si_values, si_max, m0, DL, rho, V, k, Cs0, k_cryst_ref, r_ref, alpha, C_cryst, t_max)
