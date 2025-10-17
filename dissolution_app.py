@@ -12,8 +12,9 @@ def generate_color_gradient(n_colors, start=0.2, end=0.9):
     return [mcolors.rgb2hex(color[:3]) for color in blues]
 
 @st.cache_data
-def setup_parameters(r0_values, si_values, si_max, m0, DL, rho, V, k, Cs0, k_cryst_ref, r_ref, alpha, C_cryst, t_max):
+def setup_parameters(d50_values, si_values, si_max, m0, DL, rho, V, k, Cs0, k_cryst_ref, r_ref, alpha, C_cryst, t_max):
     """Define simulation parameters for multiple particle sizes."""
+    r0_values = [d50 * 1e-6 / 2 for d50 in d50_values]
     params = {
         'm0': m0,
         'DL': DL,
@@ -28,7 +29,8 @@ def setup_parameters(r0_values, si_values, si_max, m0, DL, rho, V, k, Cs0, k_cry
         'si_values': si_values,
         'si_max': si_max,
         't_max': t_max,
-        'r0_values': r0_values
+        'r0_values': r0_values,
+        'd50_values': d50_values  # Store original D50 values for labeling
     }
     params['m_drug0_base'] = params['DL'] * params['m0']
     params['C_b0_base'] = params['m_drug0_base'] / params['V']
@@ -49,7 +51,7 @@ def dissolution_model(Cb, t, k, A0, Cs_func, m_drug0, V):
     return k * A_t * (Cs_t - Cb) / V
 
 @st.cache_data
-def run_simulation(params, A0, r0_label, k_cryst, color_gradient, linestyle):
+def run_simulation(params, A0, d50_label, k_cryst, color_gradient, linestyle):
     """Run dissolution simulation for a given particle size."""
     t = np.logspace(-2, np.log10(params['t_max']), 100)
     colors = color_gradient
@@ -89,7 +91,7 @@ def run_simulation(params, A0, r0_label, k_cryst, color_gradient, linestyle):
         'Cs_nonsink_list': Cs_nonsink_list,
         'colors': colors,
         'linestyle': linestyle,
-        'label': f'r0={r0_label*1e6:.1f}μm'
+        'label': f'D50={d50_label:.1f}μm'
     }
 
 def plot_comparison(results_list, params):
@@ -154,7 +156,7 @@ def plot_comparison(results_list, params):
             line=dict(color='white', dash=linestyle),
             name=label,
             legendgroup="particle_size",
-            legendgrouptitle_text="Particle Size (μm)" if i == 0 else None,
+            legendgrouptitle_text="Particle Size (D50, μm)" if i == 0 else None,
             showlegend=True,
             legendrank=legend_rank,
             legend="legend2"
@@ -295,17 +297,17 @@ def plot_comparison(results_list, params):
     return fig1, fig2
 
 @st.cache_data
-def run_simulations(r0_values, si_values, si_max, m0, DL, rho, V, k, Cs0, k_cryst_ref, r_ref, alpha, C_cryst, t_max):
+def run_simulations(d50_values, si_values, si_max, m0, DL, rho, V, k, Cs0, k_cryst_ref, r_ref, alpha, C_cryst, t_max):
     """Run simulations with Blues color gradient."""
-    params = setup_parameters(r0_values, si_values, si_max, m0, DL, rho, V, k, Cs0, k_cryst_ref, r_ref, alpha, C_cryst, t_max)
+    params = setup_parameters(d50_values, si_values, si_max, m0, DL, rho, V, k, Cs0, k_cryst_ref, r_ref, alpha, C_cryst, t_max)
     linestyles = ['solid', 'dash', 'dot', 'dashdot', 'longdash']
     si_all = sorted(params['si_values'] + [params['si_max']], reverse=False)  # Lowest to highest for color mapping
     n_colors = len(si_all)
     color_gradient = generate_color_gradient(n_colors, start=0.2, end=0.9)
     results = []
-    for i, (r0, A0, k_cryst) in enumerate(zip(r0_values, params['A0_values'], params['k_cryst_values'])):
+    for i, (d50, A0, k_cryst) in enumerate(zip(d50_values, params['A0_values'], params['k_cryst_values'])):
         linestyle = linestyles[i % len(linestyles)]
-        result = run_simulation(params, A0, r0, k_cryst, color_gradient, linestyle)
+        result = run_simulation(params, A0, d50, k_cryst, color_gradient, linestyle)
         results.append(result)
     return results, params
 
@@ -333,7 +335,6 @@ def main():
     st.write("Chris Kossor (cgkossor@gmail.com)")
 
     st.sidebar.header("Simulation Parameters")
-    # DL = st.sidebar.slider("Drug Loading (DL)", min_value=0.0, max_value=1.0, value=0.5, step=0.01, key="dl")
     k = st.sidebar.slider("Dissolution Rate Constant (k, m/min)", min_value=0.0001, max_value=0.005, value=1.80e-3, step=1e-4, format="%.4e", key="k")
     Cs0 = st.sidebar.slider("Initial Amorphous Solubility (Cs0, mg/L)", min_value=0.0, max_value=100.0, value=50.0, step=0.1, key="cs0")
     C_cryst = st.sidebar.slider("Crystalline Solubility (C_cryst, mg/L)", min_value=0.0, max_value=50.0, value=14.5, step=0.1, key="c_cryst")
@@ -343,13 +344,13 @@ def main():
     k_cryst_ref = st.sidebar.number_input("Reference Crystallization Rate (k_cryst_ref, /min)", min_value=0.0, value=1.36e-2, step=1e-3, format="%.3e", key="k_cryst_ref")
     alpha = st.sidebar.number_input("Power-law Exponent (alpha)", min_value=0.0, value=1.0, step=0.1, key="alpha")
    
-    st.sidebar.header("Particle Sizes (r0, μm)")
-    num_r0 = st.sidebar.number_input("Number of Particle Sizes", min_value=1, max_value=5, value=2, step=1, key="num_r0")
-    r0_values = []
-    for i in range(num_r0):
-        default_value = 22.5 if i == 0 else 37.5 if i == 1 else 10.0 * (i + 1)
-        r0 = st.sidebar.number_input(f"Particle Size {i+1} (μm)", min_value=0.0, value=default_value, step=0.1, key=f"r0_{i}") * 1e-6
-        r0_values.append(r0)
+    st.sidebar.header("Particle Sizes (D50, μm)")
+    num_d50 = st.sidebar.number_input("Number of Particle Sizes", min_value=1, max_value=5, value=2, step=1, key="num_d50")
+    d50_values = []
+    for i in range(num_d50):
+        default_value = 45.0 if i == 0 else 75.0 if i == 1 else 20.0 * (i + 1)
+        d50 = st.sidebar.number_input(f"Particle Size D50 {i+1} (μm)", min_value=0.0, value=default_value, step=0.1, key=f"d50_{i}")
+        d50_values.append(d50)
     
     st.sidebar.header("Sink Index Values (SI)")
     si_max = st.sidebar.number_input("Maximum Sink Index (SI_max)", min_value=0.0, value=3.0, step=0.1, key="si_max")
@@ -368,7 +369,7 @@ def main():
     t_max = st.sidebar.number_input("Maximum Time (t_max, min)", min_value=0.0, value=120.0, step=1.0, key="t_max")
 
     with st.container():
-        results, params = run_simulations(r0_values, si_values, si_max, m0, DL, rho, V, k, Cs0, k_cryst_ref, r_ref, alpha, C_cryst, t_max)
+        results, params = run_simulations(d50_values, si_values, si_max, m0, DL, rho, V, k, Cs0, k_cryst_ref, r_ref, alpha, C_cryst, t_max)
         fig1, fig2 = plot_comparison(results, params)
         
         st.markdown("<h3>Dissolved Percentage</h3>", unsafe_allow_html=True)
