@@ -154,7 +154,7 @@ def plot_comparison(results_list, params):
             line=dict(color='white', dash=linestyle),
             name=label,
             legendgroup="particle_size",
-            legendgrouptitle_text="Particle Size (um)" if i == 0 else None,
+            legendgrouptitle_text="Particle Size (μm)" if i == 0 else None,
             showlegend=True,
             legendrank=legend_rank,
             legend="legend2"
@@ -162,11 +162,13 @@ def plot_comparison(results_list, params):
 
     fig1.update_layout(
         # title="Dissolution Profiles",
+        margin=dict(l=20, r=20, t=0, b=20),
         xaxis_title="Time (min)",
         yaxis_title="Dissolved Percentage (%)",
         hovermode="closest",
         template="plotly_white",
-        height=600,
+        height=450,
+        font=dict(size=16),
         showlegend=True,
         legend=dict(
             groupclick="toggleitem",
@@ -174,7 +176,8 @@ def plot_comparison(results_list, params):
             y=1.0,
             xanchor="left",
             x=1.05,
-            traceorder="normal"
+            traceorder="normal",
+            font=dict(size=16)
         ),
         legend2=dict(
             groupclick="toggleitem",
@@ -182,7 +185,8 @@ def plot_comparison(results_list, params):
             y=0.7,
             xanchor="left",
             x=1.05,
-            traceorder="normal"
+            traceorder="normal",
+            font=dict(size=16)
         )
     )
 
@@ -366,9 +370,9 @@ def main():
         results, params = run_simulations(r0_values, si_values, si_max, m0, DL, rho, V, k, Cs0, k_cryst_ref, r_ref, alpha, C_cryst, t_max)
         fig1, fig2 = plot_comparison(results, params)
         
-        st.markdown("<h2>Dissolved Percentage</h2>", unsafe_allow_html=True)
+        st.markdown("<h3>Dissolved Percentage</h3>", unsafe_allow_html=True)
         st.plotly_chart(fig1, use_container_width=True, config={'staticPlot': False, 'responsive': True})
-        st.markdown("<h2>Surface Area, Solubility, and Concentration</h2>", unsafe_allow_html=True)
+        st.markdown("<h3>Surface Area, Solubility, and Concentration</h3>", unsafe_allow_html=True)
         st.plotly_chart(fig2, use_container_width=True, config={'staticPlot': False, 'responsive': True})
 
 if __name__ == "__main__":
