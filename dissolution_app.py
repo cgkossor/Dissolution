@@ -312,6 +312,7 @@ def main():
         <style>
         .main .block-container {
             padding-left: 1rem !important;
+            <h1 style='margin-bottom: -20px;'>Dissolved Percentage</h1>
         }
         </style>
         """, unsafe_allow_html=True)
@@ -358,7 +359,7 @@ def main():
         results, params = run_simulations(r0_values, si_values, si_max, m0, DL, rho, V, k, Cs0, k_cryst_ref, r_ref, alpha, C_cryst, t_max)
         fig1, fig2 = plot_comparison(results, params)
         
-        st.subheader("Dissolved Percentage")
+        # st.subheader("Dissolved Percentage")
         st.plotly_chart(fig1, use_container_width=True, config={'staticPlot': False, 'responsive': True})
         st.subheader("Surface Area, Solubility, and Concentration")
         st.plotly_chart(fig2, use_container_width=True, config={'staticPlot': False, 'responsive': True})
