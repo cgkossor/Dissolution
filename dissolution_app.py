@@ -166,7 +166,7 @@ def plot_comparison(results_list, params):
         yaxis_title="Dissolved Percentage (%)",
         hovermode="closest",
         template="plotly_white",
-        height=800,
+        height=600,
         showlegend=True,
         legend=dict(
             groupclick="toggleitem",
