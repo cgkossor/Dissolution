@@ -53,7 +53,7 @@ def dissolution_model(Cb, t, k, A0, Cs_func, m_drug0, V):
 @st.cache_data
 def run_simulation(params, A0, d50_label, k_cryst, color_gradient, linestyle):
     """Run dissolution simulation for a given particle size."""
-    t = np.logspace(-2, np.log10(params['t_max']), 100)
+    t = np.logspace(-2, np.log10(params['t_max']), 300)
     colors = color_gradient
     
     Cs_sink_func = lambda t: params['Cs_sink']
