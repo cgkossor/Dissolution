@@ -308,14 +308,21 @@ def run_simulations(r0_values, si_values, si_max, m0, DL, rho, V, k, Cs0, k_crys
 def main():
     st.set_page_config(layout="wide")
     
-    st.markdown("""
+    st.markdown(
+        """
         <style>
         .main .block-container {
             padding-left: 1rem !important;
-            <h1 style='margin-bottom: -20px;'>Dissolved Percentage</h1>
+            padding-top: 0.5rem !important;
+            padding-bottom: 0.5rem !important;
+        }
+        h1 {
+            margin-bottom: -20px;
         }
         </style>
-        """, unsafe_allow_html=True)
+        """,
+        unsafe_allow_html=True
+    )
     
     st.title("Interactive Dissolution Simulation")
     st.write("Adjust the sliders and inputs below to simulate dissolution profiles. Plots update automatically.")
@@ -359,7 +366,7 @@ def main():
         results, params = run_simulations(r0_values, si_values, si_max, m0, DL, rho, V, k, Cs0, k_cryst_ref, r_ref, alpha, C_cryst, t_max)
         fig1, fig2 = plot_comparison(results, params)
         
-        # st.subheader("Dissolved Percentage")
+        st.markdown("<h1>Dissolved Percentage</h1>", unsafe_allow_html=True)
         st.plotly_chart(fig1, use_container_width=True, config={'staticPlot': False, 'responsive': True})
         st.subheader("Surface Area, Solubility, and Concentration")
         st.plotly_chart(fig2, use_container_width=True, config={'staticPlot': False, 'responsive': True})
