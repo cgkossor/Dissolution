@@ -382,107 +382,83 @@ def main():
         
         # Noyes-Whitney Equation
         st.markdown("<h4>Noyes-Whitney Equation</h4>", unsafe_allow_html=True)
+        st.write("Describes the rate of drug dissolution based on surface area and concentration difference.")
         st.latex(r'''
             \frac{dC_b}{dt} = \frac{k \cdot A(t) \cdot (C_s(t) - C_b)}{V}
         ''')
-        st.markdown(
-            """
-            <style>
-            table { width: 50%; margin-left: auto; margin-right: auto; border: none; }
-            th, td { border: none; padding: 8px; text-align: left; }
-            </style>
-            <table>
-                <tr><th>Variable</th><th>Description</th><th>Units</th></tr>
-                <tr><td>{}</td><td>Drug concentration in bulk solution</td><td>mg/L</td></tr>
-                <tr><td>{}</td><td>Time</td><td>min</td></tr>
-                <tr><td>{}</td><td>Dissolution rate constant</td><td>m/min</td></tr>
-                <tr><td>{}</td><td>Surface area at time t</td><td>cm²</td></tr>
-                <tr><td>{}</td><td>Solubility at time t</td><td>mg/L</td></tr>
-                <tr><td>{}</td><td>Volume of dissolution medium</td><td>L</td></tr>
-            </table>
-            """.format(
-                st.latex(r'C_b', write=False),
-                st.latex(r't', write=False),
-                st.latex(r'k', write=False),
-                st.latex(r'A(t)', write=False),
-                st.latex(r'C_s(t)', write=False),
-                st.latex(r'V', write=False)
-            ),
-            unsafe_allow_html=True
-        )
-        
+        st.latex(r'''
+            \begin{array}{ccc}
+            \hline
+            \text{Variable} & \text{Description} & \text{Units} \\
+            \hline
+            C_b & \text{Drug concentration in bulk solution} & \text{mg/L} \\
+            t & \text{Time} & \text{min} \\
+            k & \text{Dissolution rate constant} & \text{m/min} \\
+            A(t) & \text{Surface area at time } t & \text{cm}^2 \\
+            C_s(t) & \text{Solubility at time } t & \text{mg/L} \\
+            V & \text{Volume of dissolution medium} & \text{L} \\
+            \hline
+            \end{array}
+        ''')
+
         # Surface Area Equation
         st.markdown("<h4>Surface Area</h4>", unsafe_allow_html=True)
+        st.write("Calculates the surface area of the drug as a function of remaining undissolved mass.")
         st.latex(r'''
             A(t) = A_0 \cdot \left( \frac{m(t)}{m_0} \right)^{2/3}
         ''')
-        st.markdown(
-            """
-            <table>
-                <tr><th>Variable</th><th>Description</th><th>Units</th></tr>
-                <tr><td>{}</td><td>Surface area at time t</td><td>cm²</td></tr>
-                <tr><td>{}</td><td>Initial surface area</td><td>cm²</td></tr>
-                <tr><td>{}</td><td>Mass of undissolved drug at time t</td><td>mg</td></tr>
-                <tr><td>{}</td><td>Initial total powder mass</td><td>mg</td></tr>
-            </table>
-            """.format(
-                st.latex(r'A(t)', write=False),
-                st.latex(r'A_0', write=False),
-                st.latex(r'm(t)', write=False),
-                st.latex(r'm_0', write=False)
-            ),
-            unsafe_allow_html=True
-        )
-        
+        st.latex(r'''
+            \begin{array}{ccc}
+            \hline
+            \text{Variable} & \text{Description} & \text{Units} \\
+            \hline
+            A(t) & \text{Surface area at time } t & \text{cm}^2 \\
+            A_0 & \text{Initial surface area} & \text{cm}^2 \\
+            m(t) & \text{Mass of undissolved drug at time } t & \text{mg} \\
+            m_0 & \text{Initial total powder mass} & \text{mg} \\
+            \hline
+            \end{array}
+        ''')
+
         # Solubility Equation
         st.markdown("<h4>Solubility</h4>", unsafe_allow_html=True)
+        st.write("Models the time-dependent solubility transitioning from amorphous to crystalline form.")
         st.latex(r'''
             C_s(t) = C_{cryst} + (C_{s0} - C_{cryst}) \cdot e^{-k_{cryst} \cdot t}
         ''')
-        st.markdown(
-            """
-            <table>
-                <tr><th>Variable</th><th>Description</th><th>Units</th></tr>
-                <tr><td>{}</td><td>Solubility at time t</td><td>mg/L</td></tr>
-                <tr><td>{}</td><td>Crystalline solubility</td><td>mg/L</td></tr>
-                <tr><td>{}</td><td>Initial amorphous solubility</td><td>mg/L</td></tr>
-                <tr><td>{}</td><td>Crystallization rate constant</td><td>/min</td></tr>
-                <tr><td>{}</td><td>Time</td><td>min</td></tr>
-            </table>
-            """.format(
-                st.latex(r'C_s(t)', write=False),
-                st.latex(r'C_{cryst}', write=False),
-                st.latex(r'C_{s0}', write=False),
-                st.latex(r'k_{cryst}', write=False),
-                st.latex(r't', write=False)
-            ),
-            unsafe_allow_html=True
-        )
-        
+        st.latex(r'''
+            \begin{array}{ccc}
+            \hline
+            \text{Variable} & \text{Description} & \text{Units} \\
+            \hline
+            C_s(t) & \text{Solubility at time } t & \text{mg/L} \\
+            C_{cryst} & \text{Crystalline solubility} & \text{mg/L} \\
+            C_{s0} & \text{Initial amorphous solubility} & \text{mg/L} \\
+            k_{cryst} & \text{Crystallization rate constant} & \text{/min} \\
+            t & \text{Time} & \text{min} \\
+            \hline
+            \end{array}
+        ''')
+
         # Crystallization Rate Constant Equation
         st.markdown("<h4>Crystallization Rate Constant</h4>", unsafe_allow_html=True)
+        st.write("Determines the crystallization rate based on particle size and a reference rate.")
         st.latex(r'''
             k_{cryst} = k_{cryst,ref} \cdot \left( \frac{r_{ref}}{r_0} \right)^{\alpha}
         ''')
-        st.markdown(
-            """
-            <table>
-                <tr><th>Variable</th><th>Description</th><th>Units</th></tr>
-                <tr><td>{}</td><td>Crystallization rate constant</td><td>/min</td></tr>
-                <tr><td>{}</td><td>Reference crystallization rate</td><td>/min</td></tr>
-                <tr><td>{}</td><td>Reference particle radius</td><td>m</td></tr>
-                <tr><td>{}</td><td>Initial particle radius</td><td>m</td></tr>
-                <tr><td>{}</td><td>Power-law exponent</td><td>Dimensionless</td></tr>
-            </table>
-            """.format(
-                st.latex(r'k_{cryst}', write=False),
-                st.latex(r'k_{cryst,ref}', write=False),
-                st.latex(r'r_{ref}', write=False),
-                st.latex(r'r_0', write=False),
-                st.latex(r'\alpha', write=False)
-            ),
-            unsafe_allow_html=True
-        )
+        st.latex(r'''
+            \begin{array}{ccc}
+            \hline
+            \text{Variable} & \text{Description} & \text{Units} \\
+            \hline
+            k_{cryst} & \text{Crystallization rate constant} & \text{/min} \\
+            k_{cryst,ref} & \text{Reference crystallization rate} & \text{/min} \\
+            r_{ref} & \text{Reference particle radius} & \text{m} \\
+            r_0 & \text{Initial particle radius} & \text{m} \\
+            \alpha & \text{Power-law exponent} & \text{Dimensionless} \\
+            \hline
+            \end{array}
+        ''')
 
 if __name__ == "__main__":
     main()
