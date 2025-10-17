@@ -1,5 +1,5 @@
 streamlit
 numpy
-scipy.integrate
+scipy
 plotly
-matplotlib.pyplot
+matplotlib
